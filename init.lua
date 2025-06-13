@@ -84,6 +84,14 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+-- Set indentation options
+vim.opt.tabstop = 2 -- Number of spaces that a <Tab> in the file counts for
+vim.opt.shiftwidth = 2 -- Number of spaces used for each step of (auto)indent
+vim.opt.softtabstop = 2 -- Number of spaces a <Tab> feels like while editing
+vim.opt.expandtab = true -- Convert tabs to spaces
+vim.opt.smartindent = true -- Enable smart indentation
+vim.opt.autoindent = true -- Copy indent from current line when starting a new line
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -675,7 +683,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
+        pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -683,7 +691,7 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
         --
 
         lua_ls = {
@@ -943,6 +951,9 @@ require('lazy').setup({
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
+    opts = {
+      use_nvim_treesitter = false,
+    },
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -973,6 +984,28 @@ require('lazy').setup({
     'rebelot/heirline.nvim',
     config = function() end,
   },
+  {
+    'mcombeau/vim-twee-sugarcube',
+    config = function() end,
+  },
+  {
+    'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons',
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false
+    end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  },
+  'github/copilot.vim',
 
   -- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
   -- init.lua. If you want these files, they are in the repository, so you can just download them and
